@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bar a Soupe : Menu{% endblock %}
+
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" defer/>
+    <link href={{asset('assets/css/index.css')}} rel="stylesheet">
+    <title>Restaurant Bar à Soupe</title>
+</head>
+<body>
+    <HEADER>
+        <img src={{asset('assets/images/Bol_Icon.png')}} alt="logo restaurant"/>
+        <h1>Restaurant Bar à Soupe</h1>
+        <nav>
+            <ul>
+                <li><a href="{{asset('acceuil')}}">Acceuil</a></li>
+                <li><a href="{{asset('menu')}}">Menus</a></li>
+                {% if app.user %}
+                    <li><a href="{{asset('reservation')}}">Réservation</a></li>
+                {% endif %}
+                <li><a href="{{asset('contact')}}">Contact</a></li>
+            </ul>
+        </nav>
+
+    </HEADER>
+
+
+
+<MAIN>
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .column_1 {width: 250px;margin-top:50px;margin-bottom:50px;}
+    img{width:250px;}
+</style>
+
+<div class="example-wrapper">
+
+<h2 style="text-align:center;margin-bottom:100px;">Menu</h2>
+{% set index = 0 %}
+
+{% for item in listePlat %}
+
+{% set index = index + 1 %}
+            
+            
+            <H4 id="Plat_{{item.id}}" style="text-align:center;">{{item.nom}}</H4>
+
+            <article Class="PlatMenu">
+
+            <table><th></th><th></th><tbody>
+            <tr>
+                <td>
+                
+                <img  src="{{asset('assets/images/recette/')}}{{item.image}}"></img>
+                </td>
+                <td>
+
+                    <p style="text-align:justify;margin-left:auto;margin-right:auto;width:90%">{{item.description}}</p>
+            
+                    <div width="500px" class="BoutonGalerie">
+            
+                        <div>
+            {% if app.user %}            
+                            <FORM NAME="choixPlat{{index}}" class="Gal__liste">
+                            <SELECT NAME="liste" onChange="javascript:selected('{{index}}')">
+                                <OPTION VALUE="1" SELECTED>1
+                                <OPTION VALUE="2">2
+                                <OPTION VALUE="3">3
+                            <OPTION VALUE="4">4
+                            </SELECT>
+                          </FORM>
+                            <a class="Reserver" href="javascript:checkReserv('{{index}}')">
+                                <i class="fa fa-square-o" aria-hidden="true">_RESERVATION</i>
+                            </a>
+            {% endif %}            
+                            <a class="coeur" href="javascript:checkAime('{{index}}')">
+                                <i class="fa fa-heart-o" aria-hidden="true">_Aime</i>
+                            </a>  
+                             
+                        </div>
+            
+                    </div>
+                </td>
+            </tr>
+                <tr>
+                <td>
+                </td>
+                <td>
+                <div width="500px" class="nutriScore"><img class="img" src="assets/images/nutriscore.gif" alt="nutriscore"/></div>
+                </td>
+                </tr>
+            </tbody></table>
+            
+            </article>
+            
+{% endfor %}
+
+
+</div>
+</MAIN>
+<FOOTER>
+ <SECTION id="PiedDePage">
+        <div>  
+                <h3>Contacter Nous</h3>
+                <img src="assets/images/iconfinder_square-facebook.svg" alt="logo Facebook"/>
+                <img src="assets/images/iconfinder_circle-twitter.svg" alt="logo Twitter"/>
+                <img src="assets/images/iconfinder_pinterest.svg" alt="logo Pinterest"/>
+        </div>
+        <div>
+            <h3>© Copyright 2021</h3>
+        </div>
+    </SECTION>
+            <script	type="text/javascript" src={{asset('assets/js/Galerie.js')}} defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/nutri-score/nutriScore.js" defer></script>
+    </FOOTER>
+{% endblock %}

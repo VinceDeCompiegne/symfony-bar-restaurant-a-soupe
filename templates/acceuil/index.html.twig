@@ -1,0 +1,171 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bar a Soupe : Acceuil{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+{# #------------------- #}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script	type="text/javascript" src="{{asset('assets/js/vousLikez.js')}}" defer></script>
+    <link href="assets/css/index.css" rel="stylesheet">
+    <title>Restaurant Bar à Soupe</title>
+</head>
+<body>
+    <HEADER>
+        <img src={{asset('/assets/images/Bol_Icon.png')}} alt="logo restaurant"/>
+        <h1>Restaurant Bar à Soupe</h1>
+        <nav>
+            <ul>
+                <li><a href="{{asset('acceuil')}}">Acceuil</a></li>
+                <li><a href="{{asset('menu')}}">Menus</a></li>
+                {% if app.user %}
+                    <li><a href="{{asset('reservation')}}">Réservation</a></li>
+                {% endif %}
+                <li><a href="{{asset('contact')}}">Contact</a></li>
+                {% if app.user and (app.user.roles[0] == "ROLE_USER") %}
+                    <li><a href="{{ path('chgpwd') }}">Changer mot de passe</a><li>
+                    <li><a href="{{ path('app_logout') }}">Logout</a><li>
+                {% elseif app.user and (app.user.roles[0] == "ROLE_ADMIN") %}
+                    <li><a href="{{ path('chgpwd') }}">Changer de mdp</a><li>
+                    <li><a href="{{ path('app_logout') }}">Logout</a><li>
+                    <li><a href="{{ path('admin') }}">Admin</a><li>
+                {% else %}
+                    <li><a href="{{asset('register')}}">Nouveau compte</a></li>
+                    <li><a href="{{asset('login')}}">login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+    </HEADER>
+    {# <MAIN> #}
+        <SECTION id="partieHaute" >
+            <div id="PhotoPrincipal" style="margin-left:auto;">
+                <img src="{{asset('assets/images/restaurant_7.jpg')}}" style="width:80%;height:auto;" alt="Photo Principal"/>
+            </div>
+        </SECTION>
+      
+{# #------------------------- #}
+<div class="example-wrapper">
+    
+{% if app.user %}
+    
+        <div style="margin-top:50px;" id="vousLikezText"></div>
+        <div style="margin-top:25px;display: grid;grid-template-columns: repeat(3, 1fr);grid-gap: 10px;text-align:center;" id="vousAimezLigne"></div>
+    
+        <article>
+            <h3 style="text-align:center;margin-top:50px;"">Vous aimez</h3>
+            <article style=" display: grid;grid-template-columns: repeat(3, 1fr);grid-gap: 10px;text-align:center;">
+            {% for item in VousAimez %}
+                 <div>
+                    <p style="margin-top:50px;">{{item.getRecette().getNom()}}</p>
+                </div>
+            {% endfor %}
+            {% for item in VousAimez %}
+                <div>
+                    <img height="250px" src="{{asset('assets/images/recette/')}}{{item.getImage().getImage()}}"></img>
+                </div>
+            {% endfor %}
+            {% for item in VousAimez %}
+                <form action="{{asset('menu')}}#Plat_{{item.getImage().getId()}}" method="post">
+                    <div><input type="submit" name="ResPlatPromo" value="Commander"></div>
+                </form>
+            {% endfor %}
+        </article>
+
+{% else %}
+
+   
+    <h3 style="text-align:center;margin-top:50px;"">Vous likez tous</h3>
+    <article style=" display: grid;grid-template-columns: repeat(3, 1fr);grid-gap: 10px;text-align:center;">
+    
+    {% for item in VousLikezTous %}
+        <div>
+            <p style="margin-top:50px;">{{item.getNom().getNom()}}</p>
+        </div>
+    {% endfor %}
+    {% for item in VousLikezTous %}
+        <div>
+            <img height="250px" src="{{asset('assets/images/recette/')}}{{item.getImage()}}"/>
+        </div>
+    {% endfor %} 
+    {% for item in VousLikezTous %}
+        <form action="{{asset('menu')}}#Plat_{{item.getId()}}" method="post">
+            <div><input type="submit" name="ResPlatPromo" value="Commander"></div>
+        </form>
+    {% endfor %} 
+    </article>
+    
+
+    <article>
+        <h3 style="text-align:center;margin-top:50px;"">Vous aimez tous</h3>
+        <article style=" display: grid;grid-template-columns: repeat(3, 1fr);grid-gap: 10px;text-align:center;">
+    {% for item in VousAimezTous %}
+        <div>
+            <p style="margin-top:50px;">{{item.getRecette().getNom()}}</p>
+        </div>
+    {% endfor %}
+    {% for item in VousAimezTous %}
+        <div>
+            <img height="250px" src="{{asset('assets/images/recette/')}}{{item.getImage().getImage()}}"/>
+        </div>
+    {% endfor %}
+    {% for item in VousAimezTous %}
+        <form action="{{asset('menu')}}#Plat_{{item.getImage().getId()}}" method="post">
+            <div><input type="submit" name="ResPlatPromo" value="Commander"></div>
+        </form>
+    {% endfor %}
+    </article>
+
+{% endif %}
+
+
+<style>
+    #horaire td { width: 200px; }
+</style>
+
+ <SECTION id="PartieBasse">
+
+        <div id="horaire">
+            <h3 class="Hidden">horaire</h3>
+            <table class="acceuil__Table" >
+                <tr class="horaire_Titre"><td>Horaires</td><td></td></tr>
+                <tr class="horaire_Jour"><td>Du lundi au vendredi</td></tr>
+                <tr class="horaire_Jour"><td>Midi</td><td>Soir</td></tr> 
+                <tr class="horaire_Heure"><td>12h00-15h00</td><td>19h00-22h00</td></tr>
+                <tr class="horaire_Heure"><td>12h00-15h00</td><td>19h00-22h00</td></tr>
+                <tr class="horaire_Jour"><td>Samedi et dimanche</td></tr>
+                <tr class="horaire_Jour"><td>Matin</td><td></td></tr>
+                <tr class="horaire_Heure"><td>6h30-8h30</td><td></td></tr>
+                <tr class="horaire_Jour"><td>Midi</td><td>Soir</td></tr>
+                <tr class="horaire_Heure"><td>12h00-15h00</td><td>19h00-23h00</td></tr>
+            </table>
+      
+        </div>
+        </div>
+        </SECTION>
+        
+    </MAIN>
+    <FOOTER>
+    <SECTION id="PiedDePage">
+        <div>  
+                <h4>Contacter Nous</h4>
+                <img src="assets/images/iconfinder_square-facebook.svg" alt="logo Facebook"/>
+                <img src="assets/images/iconfinder_circle-twitter.svg" alt="logo Twitter"/>
+                <img src="assets/images/iconfinder_pinterest.svg" alt="logo Pinterest"/>
+        </div>
+        <div>
+            <h4>© Copyright 2021</h4>
+        </div>
+    </SECTION>
+    </FOOTER>
+{% endblock %}

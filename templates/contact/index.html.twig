@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bar a Soupe : Contact{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="index.css" rel="stylesheet">
+    <link href="assets/css/index.css" rel="stylesheet">
+</head>
+<body>
+    <HEADER>
+        <img src="assets/images//Bol_Icon.png" alt="logo restaurant"/>
+        <h1>Restaurant Bar à Soupe</h1>
+        <nav>
+            <ul>
+                <li><a href="{{asset('acceuil')}}">Acceuil</a></li>
+                <li><a href="{{asset('menu')}}">Menus</a></li>
+                {% if app.user %}
+                    <li><a href="{{asset('reservation')}}">Réservation</a></li>
+                {% endif %}
+                <li><a href="{{asset('contact')}}">Contact</a></li>
+            </ul>
+        </nav>
+    </HEADER>
+    <MAIN>
+        <SECTION id="Contact">
+            <div id="Restaurant">
+                <img src="{{asset('assets/images/restaurant_7.jpg')}}" alt="Photo Restaurant"/>
+                <table id="Contact_Adresse">
+                    <tr><td>Adresse :</td><td>34 Rue de l'étoile.</tr>
+                    <tr><td></td><td>60200 COMPIEGNE</td></tr>
+                    <tr><td>Téléphone :</td><td>09.09.09.09.09</td></tr>
+                </table>
+            </div>
+<style>
+    #horaire td { width: 200px; }
+</style>
+            <div id="AdresseEtHoraire">
+                <img src="assets/images//Google_Map.JPG" alt="Emplacement restaurant"/>
+                <article id="horaire">
+                    <h3 class="Hidden">horaire</h3>
+                    <table>
+                        <tr class="horaire_Titre"><td>Horaires</td></tr>
+                        <tr class="horaire_Jour"><td>Du lundi au vendredi</td></tr>
+                        <tr class="horaire_Jour"><td>Midi</td><td>Soir</td></tr> 
+                        <tr class="horaire_Heure"><td>12h00-15h00</td><td>19h00-22h00</td></tr>
+                        <tr class="horaire_Heure"><td>12h00-15h00</td><td>19h00-22h00</td></tr>
+                        <tr class="horaire_Jour"><td>Samedi et dimanche</td></tr>
+                        <tr class="horaire_Jour"><td>Matin</td></tr>
+                        <tr class="horaire_Heure"><td>6h30-8h30</td></tr>
+                        <tr class="horaire_Jour"><td>Midi</td><td>Soir</td></tr>
+                        <tr class="horaire_Heure"><td>12h00-15h00</td><td>19h00-23h00</td></tr>
+                    </table>
+                </article>
+            </div>
+        </SECTION>
+    </MAIN>
+    <FOOTER style="position:relative;bottom:0px;">
+        <SECTION id="PiedDePage">
+            <div>  
+                    <h4>Contacter Nous</h4>
+                    <img src="assets/images//iconfinder_square-facebook.svg" alt="logo Facebook"/>
+                    <img src="assets/images//iconfinder_circle-twitter.svg" alt="logo Twitter"/>
+                    <img src="assets/images//iconfinder_pinterest.svg" alt="logo Pinterest"/>
+            </div>
+            <div>
+                <h4>© Copyright 2021</h4>
+            </div>
+        </SECTION>
+        </FOOTER>
+    </body>
+    </html>
+
+
+
+
+<div class="example-wrapper">
+
+</div>
+{% endblock %}

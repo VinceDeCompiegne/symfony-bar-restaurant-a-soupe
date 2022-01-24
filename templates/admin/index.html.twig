@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+
+
+
+
+{% block body %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="index.css" rel="stylesheet">
+    <link href="assets/css/index.css" rel="stylesheet">
+</head>
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif;display:block; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+    <HEADER>
+        <img src="assets/images//Bol_Icon.png" alt="logo restaurant"/>
+        <h1>Restaurant Bar à Soupe</h1>
+        <nav>
+            <ul>
+                <li><a href="{{asset('acceuil')}}">Acceuil</a></li>
+                <li><a href="{{asset('menu')}}">Menus</a></li>
+                {% if app.user %}
+                    <li><a href="{{asset('reservation')}}">Réservation</a></li>
+                {% endif %}
+                <li><a href="{{asset('contact')}}">Contact</a></li>
+                {% if app.user %}
+                    <li><a href="{{ path('app_logout') }}">Logout</a><li>
+                    <li><a href="{{ path('chgpwd') }}">Changer mot de passe</a><li>
+                {% endif %}
+            </ul>
+        </nav>
+    </HEADER>
+
+<div class="example-wrapper">
+
+    <h3>Bonjour {{ controller_name }}</h3>
+
+<SECTION style="display:flex;">
+<table><tr><th>Nom recette</th><th style="text-align:center;">active</th><th>supprimer</th></tr>
+{% for item in liste %}
+<tr>
+<td>{{item.getNom().getNom()}}</td>
+
+<td><FORM action="{{asset('/admin/active/')}}">
+{% if (item.active == 1) %}
+<button name="desactive" value="{{item.id}}">desactive</button>
+{% else %}
+<button name="active" value="{{item.id}}">active</button>  
+{% endif %}
+</FORM></td>
+
+<td><FORM action="{{asset('/admin/supprime/')}}">
+<button name="supprimer" value="{{item.id}}">supprimer</button>  
+</FORM></td>
+</tr>
+{% endfor %}
+
+</table>
+<table style="width:75px;"><tr><th>modifier</th></tr>
+{% for item in liste %}
+<tr>
+<td>
+<button onclick="lectureRecette({{item.nom.id}});">modifier</button>  
+</td>
+</tr>
+{% endfor %}
+</table>
+</SECTION>
+
+<table style="width:80px;"><tr><th>
+<tr>
+<td><button onclick="addRecette();">ajouter</button></td>
+</tr>
+</table>
+
+
+    <dialog id="mydialogUser" style="position:absolute;bottom:0;"> 
+            <div id="detail"></div>  
+            
+    </dialog>
+<script>
+
+function functionClose(){
+    document.getElementById("detail__div").remove();
+    document.getElementById('mydialogUser').close()
+}
+</script>
+</div>
+    <FOOTER style="position:absolute;bottom:0px;">
+        <SECTION id="PiedDePage">
+            <div>  
+                    <h4>Contacter Nous</h4>
+                    <img src="assets/images//iconfinder_square-facebook.svg" alt="logo Facebook"/>
+                    <img src="assets/images//iconfinder_circle-twitter.svg" alt="logo Twitter"/>
+                    <img src="assets/images//iconfinder_pinterest.svg" alt="logo Pinterest"/>
+            </div>
+            <div>
+                <h4>© Copyright 2021</h4>
+            </div>
+        </SECTION>
+        </FOOTER>
+
+{% endblock %}
